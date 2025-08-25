@@ -1,1 +1,39 @@
-/target
+# ======================================
+# Rust / Cargo
+# ======================================
+/target/                 # Carpeta de compilación
+**/*.rs.bk               # Archivos de respaldo generados por rustfmt
+Cargo.lock               # Opcional en librerías, pero en apps se suele versionar
+
+# ======================================
+# Archivos de entorno y configuración
+# ======================================
+.env                     # Variables de entorno (DB, API keys)
+.env.*                   # Variantes (.env.local, .env.test, etc.)
+
+# ======================================
+# IDE / Editor
+# ======================================
+# VSCode
+.vscode/
+*.code-workspace
+
+# IntelliJ / CLion / RustRover
+.idea/
+
+# Otros editores
+*.swp
+*.swo
+*~
+
+# ======================================
+# Logs
+# ======================================
+*.log
+
+# ======================================
+# Sistema operativo
+# ======================================
+.DS_Store                # macOS
+Thumbs.db                # Windows
+
