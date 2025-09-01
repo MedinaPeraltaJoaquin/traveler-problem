@@ -1,7 +1,7 @@
 # ======================================
 # Rust / Cargo
 # ======================================
-/target/                 # Carpeta de compilación
+target/                  # Carpeta de compilación
 **/*.rs.bk               # Archivos de respaldo generados por rustfmt
 Cargo.lock               # Opcional en librerías, pero en apps se suele versionar
 
@@ -37,3 +37,7 @@ Cargo.lock               # Opcional en librerías, pero en apps se suele version
 .DS_Store                # macOS
 Thumbs.db                # Windows
 
+# ======================================
+# sql
+/tests/sql/tsp.sql
+/src/utils/sql/tsp.sql
