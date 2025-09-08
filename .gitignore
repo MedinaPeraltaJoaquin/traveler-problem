@@ -40,4 +40,5 @@ Thumbs.db                # Windows
 # ======================================
 # sql
 /tests/sql/tsp.sql
-/src/utils/sql/tsp.sql
+/data/
+
