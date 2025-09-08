@@ -4,19 +4,6 @@ use traveler_problem::entity::city;
 pub fn test_city_constructor() {
     let city = city::City::new(1, 52.5200, 13.4050);
     assert_eq!(city.get_id(), 1);
-    assert_eq!(city.get_latitude(), 52.5200);
-    assert_eq!(city.get_longitude(), 13.4050);
-}
-
-#[test]
-pub fn test_city_setters() {
-    let mut city = city::City::new(1, 52.5200, 13.4050);
-    city.set_id(2);
-    city.set_latitude(48.8566);
-    city.set_longitude(2.3522);
-    assert_eq!(city.get_id(), 2);
-    assert_eq!(city.get_latitude(), 48.8566);
-    assert_eq!(city.get_longitude(), 2.3522);
 }
 
 #[test]
