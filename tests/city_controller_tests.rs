@@ -16,17 +16,14 @@ async fn setup_test_db() -> Pool<Sqlite> {
 async fn test_get_cities_connection_by_id_calculated() {
     let pool: Pool<Sqlite> = setup_test_db().await;
     let city = City { id: 1, latitude: 40.7128, longitude: -74.0060 };
-    let result: (Vec<CityWithDistance>, City) = get_cities_connection_by_id_calculated(&pool, &city).await.unwrap();
+    let result: Vec<CityWithDistance> = get_cities_connection_by_id_calculated(&pool, city).await.unwrap();
 
-    assert_eq!(result.1.get_id(), 1);
-    assert_eq!(result.0.len(), 3);
-
-    let ids: Vec<i32> = result.0.iter().map(|c| c.city.0).collect();
+    let ids: Vec<i32> = result.iter().map(|c| c.city).collect();
     assert!(ids.contains(&7));
     assert!(ids.contains(&9));
     assert!(ids.contains(&19));
 
-    for c in result.0 {
+    for c in result {
         assert!(c.distance_m > 0.0);
     }
 }
