@@ -17,7 +17,7 @@ async fn fetch_connected_cities(pool: &DbPool, city_id: i32) -> Result<Vec<City>
     .await?;
 
     if connected_ids.is_empty() {
-        return Ok(vec![]);
+        return Err(Error::RowNotFound);
     }
 
     let placeholders = connected_ids.iter().map(|_| "?").collect::<Vec<_>>().join(",");
@@ -29,34 +29,41 @@ async fn fetch_connected_cities(pool: &DbPool, city_id: i32) -> Result<Vec<City>
     }
 
     let cities: Vec<City> = q.fetch_all(pool).await?;
+    if cities.is_empty() {
+        return Err(Error::RowNotFound);
+    }
     Ok(cities)
 }
 
-pub async fn get_cities_connection_by_id(pool: &DbPool, city_id: i32) -> Result<Vec<City>, Error> {
-    fetch_connected_cities(pool, city_id).await
-}
-
-pub async fn get_cities_connection_by_id_calculated(pool: &DbPool, city_id: i32) -> Result<Vec<CityWithDistance>, Error> {
-    let origin: City = sqlx::query_as("SELECT id, latitude, longitude FROM cities WHERE id = ?")
-    .bind(city_id)
-    .fetch_one(pool)
-    .await?;
-
-    if origin.id == 0 {
-        return Ok(vec![]);
-    }
-
-    let connected_cities = fetch_connected_cities(pool, city_id).await?;
+pub async fn get_cities_connection_by_id_calculated(pool: &DbPool, city : City) -> Result<Vec<CityWithDistance>, Error> {
+    let connected_cities = fetch_connected_cities(pool, city.get_id()).await?;
 
     let result: Vec<CityWithDistance> = connected_cities
         .into_iter()
         .map(|c: City| CityWithDistance {
-            distance_m: origin.distance(&c),
-            city: c.id,
-            origin: origin.id,
+            distance_m: city.distance(&c),
+            city: c.get_id(),
+            origin: city.get_id(),
         })
         .collect();
 
     Ok(result)
 }
 
+pub async fn get_cities_connection_by_ids_calculated(pool: &DbPool) -> Result<(Vec<CityWithDistance>, Vec<City>), Error> {
+    let mut result: Vec<CityWithDistance> = Vec::new();
+    let cities: Vec<City> = sqlx::query_as("SELECT id, latitude, longitude FROM cities ORDER BY id ASC")
+        .fetch_all(pool)
+        .await?;
+
+    if cities.is_empty() {
+        return Err(Error::RowNotFound);
+    }
+
+    for city in &cities {
+        let mut connections = get_cities_connection_by_id_calculated(pool, city.clone()).await?;
+        result.append(&mut connections);
+    }
+    
+    Ok((result, cities))
+}
