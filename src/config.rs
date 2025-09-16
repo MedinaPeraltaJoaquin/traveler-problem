@@ -5,7 +5,6 @@ pub struct Config {
     pub initial_temperature: f64,
     pub cooling_rate: f64,
     pub size_lote: usize,
-    pub seed: u64,
     pub db_url: String,
     pub sql_path: String,
     pub e_s : f64,
@@ -34,12 +33,6 @@ impl Config {
             .parse::<usize>()
             .expect("SIZE_LOTE debe ser un número entero");
 
-        let seed_i32 = env::var("SEED")
-            .expect("Falta SEED en .env")
-            .parse::<i32>()
-            .expect("SEED debe ser un número entero");
-
-        let seed = seed_i32 as u64;
         let e_s = env::var("E_S")
             .expect("Falta E_S en .env")
             .parse::<f64>()
@@ -72,7 +65,6 @@ impl Config {
             initial_temperature,
             cooling_rate,
             size_lote,
-            seed,
             db_url,
             sql_path,
             e_s,
