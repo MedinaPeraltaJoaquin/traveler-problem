@@ -48,10 +48,15 @@ impl Path {
     }
 
     pub fn get_vecino(&mut self, random: &mut StdRng) -> (usize, usize, f64) {
-        let index_1 = random.gen_range(1..self.path.len()) as usize;
-        let index_2 = random.gen_range(0..index_1) as usize;
+        if self.path.len() < 2 {
+            panic!("No se puede generar vecino con menos de 2 elementos en path");
+        }
+
+        let index_1 = random.gen_range(1..self.path.len());
+        let index_2 = random.gen_range(0..index_1);     
+
         if index_1 == index_2 {
-            return self.get_vecino(random);
+            return self.get_vecino(random); 
         }
 
         self.vecino = self.calculate_vecino(index_1, index_2);
