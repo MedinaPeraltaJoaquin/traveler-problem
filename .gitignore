@@ -42,3 +42,7 @@ Thumbs.db                # Windows
 /tests/sql/tsp.sql
 /data/
 
+# svg / reports
+/svg/
+/reports/
+
