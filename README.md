@@ -3,6 +3,8 @@
 Este proyecto está escrito en **Rust** y utiliza **SQLite** como base de datos.  
 Incluye un ejecutable que admite varias opciones desde la línea de comandos para procesamiento de archivos `.tsp`, generación de semillas y salida en formato SVG.
 
+[Reporte del proyecto](./Proyecto1_Heuristicas.pdf)
+
 ---
 
 ## 📦 Requisitos
