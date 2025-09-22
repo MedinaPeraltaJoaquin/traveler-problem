@@ -87,7 +87,7 @@ impl Path {
 
         self.get_vecino(random);
         self.apply_vecino();
-        return self.get_min(random, self.cost);
+        return self.get_min(random, cost);
     }
 
     pub fn clone(&self) -> Self {
