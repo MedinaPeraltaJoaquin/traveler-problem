@@ -191,6 +191,8 @@ impl ReadInput {
         println!("  -s <n>             Inicializa con la semilla n");
         println!("  -rs <n>            Genera n semillas aleatorias");
         println!("  -svg               Activa el modo de salida SVG");
+        println!("  --recover          Recupera las mejores 10 semillas de una serie de reportes");
+        
     }
 
 
