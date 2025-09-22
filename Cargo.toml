@@ -1,10 +1,10 @@
 [package]
 name = "traveler_problem"
-version = "1.0"
+version = "0.1.0"
 authors = ["Joaquín Medina Peralta joaquin.medina513@ciencias.unam.mx"]
 description = "Módulo para la resolución del problema TSP por medio una heurística"
 license = "MIT"
-edition = "2025"
+edition = "2024"
 
 [dependencies]
 dotenvy = "0.15"

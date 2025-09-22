@@ -74,21 +74,22 @@ impl Path {
         return true;
     }
 
-    pub fn get_min(&mut self) -> (usize,usize,f64){
-        let mut vecinos : Vec<(usize,usize,f64)> = vec![];
+    pub fn get_min(&mut self, random: &mut StdRng) -> (usize,usize,f64){
+        let (normalize,distance_max) = (self.get_normalize(),self.get_distance_max());
+        let min : f64 = self.calculate_cost(normalize, distance_max);
         for i in 0..self.path.len() {
             for j in i+1..self.path.len() {
-                vecinos.push(self.calculate_vecino(i, j));
+                let vecino = self.calculate_vecino(i, j);
+                if vecino.2 < min {
+                    self.vecino = vecino;
+                    return self.vecino;
+                }
             }
         }
 
-        if let Some(min_vecino) = vecinos.into_iter().min_by(|a, b| {
-            a.2.partial_cmp(&b.2).unwrap_or(std::cmp::Ordering::Equal)
-        }) && min_vecino.2 < self.get_cost() {
-            self.vecino = min_vecino;
-        }
-
-        self.vecino
+        self.get_vecino(random);
+        self.apply_vecino();
+        return self.get_min(random);
     }
 
     pub fn clone(&self) -> Self {

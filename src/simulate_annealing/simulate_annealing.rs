@@ -83,7 +83,7 @@ impl SimulatedAnnealing {
     }
 
     pub fn get_best_solution(&mut self) -> &Path {
-        self.current_solution.get_min();
+        self.current_solution.get_min(&mut self.random);
         self.current_solution.apply_vecino();
         &self.current_solution
     }
