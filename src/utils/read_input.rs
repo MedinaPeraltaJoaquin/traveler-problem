@@ -115,6 +115,10 @@ impl ReadInput {
         self.get_flag("-h") || self.get_flag("--help")
     }
 
+    pub fn get_recover(&self) -> bool {
+        self.get_flag("--recover")
+    }
+
     pub fn get_seed(&mut self) -> Result<Vec<i32>, InputError> {
         if !self.seeds.is_empty() {
             return Ok(self.seeds.clone());
@@ -188,6 +192,8 @@ impl ReadInput {
         println!("  -rs <n>            Genera n semillas aleatorias");
         println!("  -svg               Activa el modo de salida SVG");
     }
+
+
 
     fn get_flag(&self, flag : &'static str) -> bool {
         self.args.iter().any(|arg| arg == flag)

@@ -50,6 +50,7 @@ impl SimulatedAnnealing {
             generate_svg.add_point((vecino.2,0));
             if vecino.2 <= self.current_solution.get_cost() + self.initial_temperature {
                 self.current_solution.apply_vecino();
+                println!("{}",self.current_solution.get_cost());
                 c += 1;
                 cost += self.current_solution.get_cost();
                 if self.current_solution.get_cost() < self.best_solution.get_cost() {

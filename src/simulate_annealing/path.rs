@@ -75,6 +75,7 @@ impl Path {
     }
 
     pub fn get_min(&mut self) -> (usize,usize,f64){
+        //recursivo
         let mut vecinos : Vec<(usize,usize,f64)> = vec![];
         for i in 0..self.path.len() {
             for j in i+1..self.path.len() {
@@ -112,6 +113,8 @@ impl Path {
 
     fn calculate_normalization(&mut self) -> (f64,f64) {
         let mut edges: Vec<f64> = vec![];
+
+        //modificar
         for i in 0..self.path.len() {
             for j in i+1..self.path.len() {
                 if let Some(weight) = self.graph.get_edge(self.path[i], self.path[j]) && weight.1 == 1 {

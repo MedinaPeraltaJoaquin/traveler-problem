@@ -9,6 +9,7 @@ use utils::read_input::ReadInput;
 use config::Config;
 use utils::write_report::WriteReport;
 use utils::generate_svg::GenerateSvg;
+use utils::recover_report::procesar_archivos;
 use simulate_annealing::simulate_annealing::SimulatedAnnealing;
 use simulate_annealing::graph::Graph;
 use simulate_annealing::path::Path;
@@ -33,6 +34,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         read_input.print_help();
         return Ok(());
     }
+
+    if read_input.get_recover() {
+        let _ = procesar_archivos().unwrap();
+        return Ok(());
+    }
+
 
     let verbose_mode = read_input.get_verbose();
     let svg_mode = read_input.get_svg();
