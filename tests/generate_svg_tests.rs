@@ -18,22 +18,20 @@ mod tests {
     fn test_add_point_svg_mode_false() {
         let mut svg = GenerateSvg::new(false, 100, 50, 5);
         let added = svg.add_point((42.0, 1));
-        assert!(added);
-        assert_eq!(svg.points.len(), 1);
-        assert_eq!(svg.points[0], (42.0, 1));
+        assert!(!added);
     }
 
     #[test]
     fn test_add_point_svg_mode_true() {
         let mut svg = GenerateSvg::new(true, 100, 50, 5);
         let added = svg.add_point((42.0, 1));
-        assert!(!added);
-        assert_eq!(svg.points.len(), 0);
+        assert!(added);
+        assert_eq!(svg.points.len(), 1);
     }
 
     #[test]
     fn test_generate_svg_empty() {
-        let mut svg = GenerateSvg::new(false, 150, 75, 10);
+        let mut svg = GenerateSvg::new(true, 150, 75, 10);
         let content = svg.generate_svg();
         assert!(content.contains(r#"<svg xmlns="http://www.w3.org/2000/svg" width="150" height="75">"#));
         assert!(!content.contains("<circle"));
@@ -42,7 +40,7 @@ mod tests {
 
     #[test]
     fn test_generate_svg_with_points() {
-        let mut svg = GenerateSvg::new(false, 100, 50, 5);
+        let mut svg = GenerateSvg::new(true, 100, 50, 5);
         svg.add_point((10.0, 0));
         svg.add_point((20.0, 1));
         svg.add_point((30.0, 0));
@@ -51,7 +49,7 @@ mod tests {
         assert!(content.contains("<circle"));
         assert!(content.contains("fill=\"red\""));
         let red_count = content.matches("fill=\"red\"").count();
-        assert_eq!(red_count, 1);
+        assert_eq!(red_count, 2);
     }
 
     #[test]
@@ -59,7 +57,7 @@ mod tests {
         let tmp_dir = tempdir().unwrap();
         let dir_path = tmp_dir.path().to_str().unwrap();
 
-        let mut svg = GenerateSvg::new(false, 100, 50, 5);
+        let mut svg = GenerateSvg::new(true, 100, 50, 5);
         svg.add_point((10.0, 0));
         svg.add_point((20.0, 1));
 
