@@ -135,7 +135,7 @@ mod tests {
 
         for _ in 0..city_ids_length {
             let actual_cost = path.get_cost();
-            let vecino = path.get_min(&mut random_1);
+            let vecino = path.get_min(&mut random_1,actual_cost);
             assert!(path.apply_vecino());
             assert!(vecino.2 < actual_cost);
         }
