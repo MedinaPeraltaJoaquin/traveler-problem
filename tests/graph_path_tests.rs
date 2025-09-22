@@ -113,7 +113,7 @@ mod tests {
         
         let mut city_ids = vec![1,2,3,4,74,163,164,165,166,167,169,326,327,328,329,330,489,490,
         491,492,493,494,495,653,654,655,658,666,814,815,816,817,818,819,978,979,980,981,1037,1073];
-        let mut path = Path::new(city_ids.clone(), graph);
+        let mut path = Path::new(city_ids.clone(), graph.clone());
         let seed = 1 as u64;
         let mut random_1 = StdRng::seed_from_u64(seed);
         let mut random_2 = StdRng::seed_from_u64(seed);
@@ -133,12 +133,12 @@ mod tests {
             assert_eq!(*path.get_path(), city_ids)
         }
 
-        for _ in 0..city_ids_length {
-            let actual_cost = path.get_cost();
-            let vecino = path.get_min(&mut random_1,actual_cost,1000);
-            if vecino.2 != 0.0 {
-                assert!(vecino.2 < actual_cost);   
-            }
+        city_ids = vec![663, 657, 661, 832, 829, 1, 986, 508, 9, 168, 505, 19, 839, 496, 182, 172, 815, 184, 667, 656, 2, 173, 673, 665, 507, 653, 344, 490, 654, 7, 823, 678, 816, 187, 982, 14, 181, 332, 345, 820, 26, 185, 991, 27, 353, 990, 333, 981, 3, 165, 988, 174, 4, 489, 347, 817, 23, 176, 668, 352, 978, 6, 5, 1004, 351, 22, 213, 676, 163, 329, 509, 493, 979, 837, 995, 331, 662, 8, 999, 343, 510, 660, 20, 825, 500, 504, 164, 11, 501, 17, 444, 826, 980, 297, 336, 840, 350, 511, 327, 670, 985, 674, 334, 1003, 349, 984, 491, 25, 492, 499, 183, 75, 346, 171, 483, 1075, 652, 821, 512, 179, 671, 16, 520, 186, 675, 339, 502, 340, 1038, 12, 828, 151, 822, 1001, 74, 166, 658, 666, 818, 655, 819, 330, 1073, 169, 1037, 326, 328, 167, 495, 494];
+        path = Path::new(city_ids.clone(),graph.clone());
+        let actual_cost = path.get_cost();
+        let vecino = path.get_min();
+        if vecino.2 != 0.0 {
+            assert!(vecino.2 < actual_cost);   
         }
     }
 }
