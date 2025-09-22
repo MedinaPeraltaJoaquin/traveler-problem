@@ -85,7 +85,7 @@ impl SimulatedAnnealing {
     pub fn get_best_solution(&mut self) -> &Path {
         let cost = self.best_solution.get_cost();
         let mut temp_solution = self.best_solution.clone();
-        temp_solution.get_min(&mut self.random, cost,self.limit);
+        temp_solution.get_min(&mut self.random, cost,1);
         temp_solution.apply_vecino();
         if temp_solution.get_cost() < self.best_solution.get_cost() {
             self.best_solution = temp_solution.clone();
