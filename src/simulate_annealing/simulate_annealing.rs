@@ -47,15 +47,16 @@ impl SimulatedAnnealing {
                 break;
             }
             let vecino = self.current_solution.get_vecino(&mut self.random);
-            generate_svg.add_point((vecino.2,0));
             if vecino.2 <= self.current_solution.get_cost() + self.initial_temperature {
                 self.current_solution.apply_vecino();
                 c += 1;
                 cost += self.current_solution.get_cost();
                 if self.current_solution.get_cost() < self.best_solution.get_cost() {
                     self.best_solution = self.current_solution.clone();
-                    generate_svg.add_point((vecino.2,1));
+                    println!("{}",self.current_solution.get_cost());
+
                 }
+                generate_svg.add_point((vecino.2,1));
             }
             i += 1;
          }
@@ -83,13 +84,8 @@ impl SimulatedAnnealing {
     }
 
     pub fn get_best_solution(&mut self) -> &Path {
-        let cost = self.best_solution.get_cost();
-        let mut temp_solution = self.best_solution.clone();
-        temp_solution.get_min(&mut self.random, cost,self.limit);
-        temp_solution.apply_vecino();
-        if temp_solution.get_cost() < self.best_solution.get_cost() {
-            self.best_solution = temp_solution.clone();
-        }
+        println!("Entra en el min");
+        self.best_solution.get_min();
         &self.best_solution
     }
 }
