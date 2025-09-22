@@ -74,13 +74,11 @@ impl Path {
         return true;
     }
 
-    pub fn get_min(&mut self, random: &mut StdRng) -> (usize,usize,f64){
-        let (normalize,distance_max) = (self.get_normalize(),self.get_distance_max());
-        let min : f64 = self.calculate_cost(normalize, distance_max);
+    pub fn get_min(&mut self, random: &mut StdRng, cost: f64) -> (usize,usize,f64){
         for i in 0..self.path.len() {
             for j in i+1..self.path.len() {
                 let vecino = self.calculate_vecino(i, j);
-                if vecino.2 < min {
+                if vecino.2 < cost {
                     self.vecino = vecino;
                     return self.vecino;
                 }
@@ -89,7 +87,7 @@ impl Path {
 
         self.get_vecino(random);
         self.apply_vecino();
-        return self.get_min(random);
+        return self.get_min(random, self.cost);
     }
 
     pub fn clone(&self) -> Self {
