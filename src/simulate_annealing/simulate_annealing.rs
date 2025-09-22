@@ -84,7 +84,6 @@ impl SimulatedAnnealing {
     }
 
     pub fn get_best_solution(&mut self) -> &Path {
-        println!("Entra en el min");
         self.best_solution.get_min();
         &self.best_solution
     }
